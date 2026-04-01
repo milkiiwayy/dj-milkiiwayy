@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DJ MILKIIWAYY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080810;
+      --surface: #0f0f1a;
+      --surface2: #15152a;
+      --purple: #7c3aed;
+      --purple-soft: #a78bfa;
+      --purple-dim: rgba(124, 58, 237, 0.08);
+      --text: #e8e4f0;
+      --muted: #6b6880;
+      --border: rgba(124, 58, 237, 0.22);
+      --border-soft: rgba(255,255,255,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.25rem 5rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 1.5px;
+      height: 1.5px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle var(--d) ease-in-out infinite var(--delay);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: var(--op); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .avatar-ring {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin-bottom: 1.75rem;
+    }
+    .avatar-ring svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      animation: ringspin 12s linear infinite;
+    }
+    @keyframes ringspin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .avatar-inner {
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .avatar-placeholder {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--purple-soft);
+      letter-spacing: 0.05em;
+    }
+
+    .name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 10vw, 4rem);
+      letter-spacing: 0.12em;
+      color: var(--text);
+      text-align: center;
+      line-height: 1;
+    }
+    .name span { color: var(--purple-soft); }
+
+    .tagline {
+      font-family: 'Italiana', serif;
+      font-size: 1rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      margin: 1.75rem 0 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+    .divider-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--purple-soft);
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--purple-soft);
+      margin: 1.75rem 0 0.85rem;
+      align-self: flex-start;
+      opacity: 0.8;
+    }
+
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--purple-dim);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .link-btn:hover { border-color: var(--border); transform: translateY(-2px); }
+    .link-btn:hover::before { opacity: 1; }
+    .link-btn:active { transform: translateY(0); }
+
+    .link-arrow {
+      position: absolute;
+      right: 1.2rem;
+      color: var(--purple-soft);
+      font-size: 0.85rem;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .link-btn:hover .link-arrow { opacity: 1; transform: translateX(0); }
+
+    .link-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--purple-dim);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .link-icon svg { width: 16px; height: 16px; }
+
+    .link-text { flex: 1; position: relative; z-index: 1; }
+    .link-title { display: block; font-weight: 500; font-size: 0.82rem; color: var(--text); }
+    .link-sub { display: block; font-size: 0.68rem; color: var(--muted); margin-top: 1px; }
+
+    .social-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 100px;
+      text-decoration: none;
+      color: var(--muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .social-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .social-btn:hover { color: var(--purple-soft); border-color: var(--border); background: var(--purple-dim); }
+
+    .booking-box {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+    .booking-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+    }
+    .booking-box p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+    .booking-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1.5rem;
+      background: var(--purple);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background 0.15s, transform 0.12s;
+    }
+    .booking-btn:hover { background: #6d28d9; transform: translateY(-1px); }
+
+    .footer {
+      margin-top: 3.5rem;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-align: center;
+      opacity: 0.5;
+    }
+
+    .container > * {
+      animation: fadeup 0.6s ease both;
+    }
+    .container > *:nth-child(1) { animation-delay: 0.05s; }
+    .container > *:nth-child(2) { animation-delay: 0.1s; }
+    .container > *:nth-child(3) { animation-delay: 0.15s; }
+    .container > *:nth-child(4) { animation-delay: 0.2s; }
+    .container > *:nth-child(5) { animation-delay: 0.25s; }
+    .container > *:nth-child(6) { animation-delay: 0.3s; }
+    .container > *:nth-child(7) { animation-delay: 0.35s; }
+    .container > *:nth-child(8) { animation-delay: 0.4s; }
+    .container > *:nth-child(9) { animation-delay: 0.45s; }
+    .container > *:nth-child(10) { animation-delay: 0.5s; }
+    .container > *:nth-child(11) { animation-delay: 0.55s; }
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+  <div class="avatar-ring">
+    <svg viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="65" cy="65" r="62" stroke="url(#ringgrad)" stroke-width="1" stroke-dasharray="6 4"/>
+      <defs>
+        <linearGradient id="ringgrad" x1="0" y1="0" x2="130" y2="130" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.8"/>
+          <stop offset="50%" stop-color="#a78bfa" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.8"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="avatar-inner">
+      <!-- Replace with: <img src="your-photo.jpg" alt="DJ MILKIIWAYY" style="width:100%;height:100%;object-fit:cover;"> -->
+      <span class="avatar-placeholder">MW</span>
+    </div>
+  </div>
+
+  <h1 class="name">DJ <span>MILKII</span>WAYY</h1>
+  <p class="tagline">darkness you can dance to</p>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- MUSIC -->
+  <span class="section-label">Music</span>
+  <div class="links">
+
+    <a class="link-btn" href="https://soundcloud.com/YOUR_USERNAME" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 15.5a3 3 0 0 0 3 3h12a4 4 0 0 0 0-8 5 5 0 0 0-9.9 1"/>
+        </svg>
+      </span>
+      <span class="link-text">
+        <span class="link-title">SoundCloud</span>
+        <span class="link-sub">Latest mixes & sets</span>
+      </span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://open.spotify.com/artist/YOUR_ID" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8 12.5c2.5-1 5.5-1 8 0M7 9.5c3-1.2 7-1.2 10 0M9 15.5c2-0.8 4-0.8 6 0"/>
+        </svg>
+      </span>
+      <span class="link-text">
+        <span class="link-title">Spotify</span>
+        <span class="link-sub">Follow on Spotify</span>
+      </span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://www.mixcloud.com/YOUR_USERNAME" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+      </span>
+      <span class="link-text">
+        <span class="link-title">Mixcloud</span>
+        <span class="link-sub">Full-length radio mixes</span>
+      </span>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- SOCIAL -->
+  <span class="section-label">Follow Along</span>
+  <div class="social-row">
+
+    <a class="social-btn" href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+      </svg>
+      Instagram
+    </a>
+
+    <a class="social-btn" href="https://tiktok.com/@YOUR_HANDLE" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+      </svg>
+      TikTok
+    </a>
+
+    <a class="social-btn" href="https://youtube.com/@YOUR_HANDLE" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22.5 6.5a3 3 0 0 0-2.1-2.1C18.5 4 12 4 12 4s-6.5 0-8.4.4a3 3 0 0 0-2.1 2.1C1 8.4 1 12 1 12s0 3.6.5 5.5a3 3 0 0 0 2.1 2.1C5.5 20 12 20 12 20s6.5 0 8.4-.4a3 3 0 0 0 2.1-2.1C23 15.6 23 12 23 12s0-3.6-.5-5.5z"/>
+        <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" stroke="none"/>
+      </svg>
+      YouTube
+    </a>
+
+  </div>
+
+  <!-- BOOKING -->
+  <span class="section-label">Bookings</span>
+  <div class="booking-box">
+    <p>Available for club nights, private events, festivals & more.<br>Let's make the room move.</p>
+    <a class="booking-btn" href="mailto:your@email.com">Book Now</a>
+  </div>
+
+  <p class="footer">© 2025 DJ MILKIIWAYY &nbsp;·&nbsp; All rights reserved</p>
+
+</div>
+
+<script>
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*5}s;--op:${0.2+Math.random()*0.5};`;
+    starsEl.appendChild(s);
+  }
+</script>
+</body>
+</html>
